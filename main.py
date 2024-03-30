@@ -15,14 +15,24 @@ target_img = pygame.image.load("img/target.png")  # добавляем карт�
 target_width = 80   #размеры цели
 target_height = 80
 
-target_x = random.randint (0,SCREEN_WIDTH-target_width)    #hfyljvyst координаты x,y для цели
+target_x = random.randint (0,SCREEN_WIDTH-target_width)    #рандом координаты x,y для цели
 target_y = random.randint (0,SCRIEN_HEIGHT-target_height)
 
 color = (random.randint(0,255), random.randint(0,255),random.randint(0,255))
 
-running = true
+running = True
 
 while running:
-    pass
+    screen.fill(color)  #заливка окна
+    for event in pygame.event.get():  # обработка событий
+        if event.type == pygame.QUIT: # проверка нажатия выхода
+            running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:  # проверка нажатия мышки и вычисления попадания в цель
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            if target_x < mouse_x < target_x + target_width and target_y < mouse_y < target_y + target_height:
+                target_x = random.randint(0, SCREEN_WIDTH - target_width)  # рандом координаты x,y для цели
+                target_y = random.randint(0, SCRIEN_HEIGHT - target_height)
+    screen.blit(target_img, dest=(target_x,target_y))  # отображение цели в координатах
+    pygame.display.update()   # обновление окна
 
 pygame.quit()
